@@ -5,6 +5,7 @@ use Yii;
 use app\models\Paymentshortcode;
 use app\models\PaymentshortcodeSearch;
 use yii\web\Controller;
+use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\JsonParser;
@@ -49,8 +50,27 @@ class PaymentshortcodeController extends Controller
 
     public function actionGetold($shortcodeId)
     {
-        // print_r($shortcodeId);
-        // die();
+        
+//         $shortcode = Paymentshortcode::findOne($shortcodeId);
+// print_r($shortcode);
+// return $shortcode;
+//         die();
+//         if ($shortcode) {
+//             // Assuming the attributes in the Paymentshortcode model are named OldHeadOfAccount, RationalizedHeadOfAccount, and DrOrCr
+//             $data = [
+//                 'OldHeadOfAccount' => $shortcode->OldHeadOfAccount,
+//                 'RationalizedHeadOfAccount' => $shortcode->RationalizedHeadOfAccount,
+//                 'DrOrCr' => $shortcode->DrOrCr,
+//             ];
+
+//             return json_encode($data);
+//         }
+//         return json_encode([]);
+
+Yii::$app->response->format = Response::FORMAT_JSON;
+
+    try {
+        // Rest of the code
         $shortcode = Paymentshortcode::findOne($shortcodeId);
 
         if ($shortcode) {
@@ -60,10 +80,17 @@ class PaymentshortcodeController extends Controller
                 'RationalizedHeadOfAccount' => $shortcode->RationalizedHeadOfAccount,
                 'DrOrCr' => $shortcode->DrOrCr,
             ];
-
-            return json_encode($data);
+            return $data; // Return the array directly, Yii will convert it to JSON format
         }
-        return json_encode([]);
+
+        return []; // Return an empty array if $shortcode is not found
+    } catch (\Exception $e) {
+        // Log the exception
+        Yii::error($e->getMessage(), 'paymentshortcode');
+
+        // Return an empty array or an error message to the client
+        return ['error' => 'An error occurred while processing the request.'];
+    }
     }
 
     /**

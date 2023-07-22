@@ -112,13 +112,13 @@ use app\models\ContractorDetails;
                             </div>
 
                              <div class="col-sm-3">
-                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]OldHeadOfAccount")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]OldHeadOfAccount")->textInput(['maxlength' => true,'id'  => 'Paymentvoucherwork-OldHeadOfAccount']) ?>
                             </div>
                             <div class="col-sm-3">
-                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]RationalizedHeadOfAccount")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]RationalizedHeadOfAccount")->textInput(['maxlength' => true,'id'  => 'Paymentvoucherwork-RationalizedHeadOfAccount']) ?>
                             </div>
                             <div class="col-sm-2">
-                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]DrOrCr")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]DrOrCr")->textInput(['maxlength' => true,'id'  => 'Paymentvoucherwork-DrOrCr']) ?>
                             </div>
                             <div class="col-sm-2">
                                 <?= $form->field($modelPaymentvoucherwork, "[{$i}]Amount")->textInput(['maxlength' => true, 'class' => 'payment-amount']) ?>
@@ -423,16 +423,41 @@ $(".dynamicform_wrapper2").on("limitReached", function(e, item1) {
     alert("Limit reached");
 });
 
-$('#shortcode').on('change',function(){
-    var shortcodeId = $(this).val();
-    $.get('index.php?r=paymentshortcode%2Fgetold',{ shortcodeId : shortcodeId },function(data){
-        // console.log(data); 
-        var data = $.parseJSON(data);
-        $('#Paymentvoucherwork-OldHeadOfAccount').attr('value',data.OldHeadOfAccount);
-        $('#Paymentvoucherwork-RationalizedHeadOfAccount').attr('value',data.RationalizedHeadOfAccount);
-        $('#Paymentvoucherwork-Amount').attr('value',data.Amount);
-    })
+// $('#shortcode').on('change',function(){
+//     var shortcodeId = $(this).val();
+//     $.get('index.php?r=paymentshortcode%2Fgetold',{ shortcodeId : shortcodeId },function(data){
+//         console.log(data); 
+//         var data = $.parseJSON(data);
+//         $('#Paymentvoucherwork-OldHeadOfAccount').attr('value',data.OldHeadOfAccount);
+//         $('#Paymentvoucherwork-RationalizedHeadOfAccount').attr('value',data.RationalizedHeadOfAccount);
+//         $('#Paymentvoucherwork-DrOrCr').attr('value',data.DrOrCr);
+//     })
+// });
+
+$('#shortcode').on('change', function () {
+  var shortcodeId = $(this).val();
+  $.get('index.php?r=paymentshortcode%2Fgetold', { shortcodeId: shortcodeId }, function (data) {
+    console.log(data);
+
+    // Check if the data is already an object
+    if (typeof data === 'object') {
+      $('#Paymentvoucherwork-OldHeadOfAccount').val(data.OldHeadOfAccount);
+      $('#Paymentvoucherwork-RationalizedHeadOfAccount').val(data.RationalizedHeadOfAccount);
+      $('#Paymentvoucherwork-DrOrCr').val(data.DrOrCr);
+    } else {
+      // If the data is a JSON-encoded string, parse it
+      try {
+        var parsedData = $.parseJSON(data);
+        $('#Paymentvoucherwork-OldHeadOfAccount').val(parsedData.OldHeadOfAccount);
+        $('#Paymentvoucherwork-RationalizedHeadOfAccount').val(parsedData.RationalizedHeadOfAccount);
+        $('#Paymentvoucherwork-DrOrCr').val(parsedData.DrOrCr);
+      } catch (e) {
+        console.error('Error parsing JSON data:', e);
+      }
+    }
+  });
 });
+
 JS;
 $this->registerJS($script);
 ?>
