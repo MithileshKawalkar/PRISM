@@ -1,0 +1,57 @@
+
+#main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 180px;
+    height: 100vh;
+}
+
+h1{
+    margin:0px;
+    padding:0px;
+}
+h4{
+    margin: -15px 0px 10px 0px;
+}
+
+.page_404 { 
+    padding: 40px 40px; 
+    background: #fff; 
+    font-family: 'Arvo', serif;
+}
+
+.page_404 img {
+    width: 100%;
+}
+
+.img {
+    content: "";
+    height: 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 50px;
+    background-image: url('../assets/404.jpg');
+}
+
+.four_zero_four_bg h1 {
+    font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+    font-size: 80px;
+}
+
+.link_404 {		
+    border-radius: 10px;	 
+    color: #fff!important;
+    padding: 10px 20px;
+    background: #1c7018;
+    margin: 20px 0;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.contant_box_404 { 
+    margin-top: -50px;
+}
