@@ -96,6 +96,9 @@ class VoucherworkController extends Controller
         $searchModel = new VoucherworkSearch();
 
         if ($showAll) {
+            Yii::$app->session->set('showAllVouchers', true);
+        } else {
+            Yii::$app->session->set('showAllVouchers', false);
             $searchModel->scenario = 'showAll'; // Set the 'showAll' scenario when the button is clicked
         }
 
