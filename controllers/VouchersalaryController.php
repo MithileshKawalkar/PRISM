@@ -82,6 +82,28 @@ class VouchersalaryController extends Controller
         }
     }
 
+
+    public function actionShowall($showAll = false)
+    {
+        $searchModel = new VouchersalarySearch();
+
+        if ($showAll) {
+            Yii::$app->session->set('showAllVouchers', true);
+        } else {
+            Yii::$app->session->set('showAllVouchers', false);
+            $searchModel->scenario = 'showAll'; // Set the 'showAll' scenario when the button is clicked
+        }
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    } 
+
+
+
     /**
      * Displays a single Vouchersalary model.
      * @param int $id ID

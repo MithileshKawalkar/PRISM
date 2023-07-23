@@ -22,6 +22,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= (!Yii::$app->user->can("is-AOA") && !Yii::$app->user->can("is-cashier")) ? Html::a('Create Vouchersalary', ['create'], ['class' => 'btn btn-success']) : '' ?>
     </p>
 
+    <div style="text-align: right;">
+    <?php
+         $showAllVouchers = Yii::$app->session->get('showAllVouchers', false);
+
+         if ($showAllVouchers) {
+             echo Html::a('Show All Vouchers', ['vouchersalary/showall'], ['class' => 'btn btn-primary']);
+         } else {
+             echo Html::a('Show My Vouchers', ['vouchersalary/showall', 'showAll' => true], ['class' => 'btn btn-primary']);
+         }
+        ?>
+        </div>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([

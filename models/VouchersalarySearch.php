@@ -28,7 +28,10 @@ class VouchersalarySearch extends Vouchersalary
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return [
+            'default' => parent::scenarios()['default'],
+            'showAll' => $this->attributes(), // Add a new scenario named 'showAll'
+        ];
     }
 
     /**
@@ -56,6 +59,14 @@ class VouchersalarySearch extends Vouchersalary
             return $dataProvider;
         }
 
+        if ($this->scenario === 'showAll') {
+            // Remove the filter for Created_by if 'showAll' scenario is used
+            $query->andFilterWhere(['like', 'Created_by', $this->Created_by]);
+        } else {
+            // Apply the default filter for Created_by based on user's role
+            $query->andFilterWhere(['like', 'Created_by', ((Yii::$app->user->can("is-cashier") || Yii::$app->user->can("is-AOA")) ? $this->Created_by : Yii::$app->user->id)]);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -69,8 +80,7 @@ class VouchersalarySearch extends Vouchersalary
             ->andFilterWhere(['like', 'NameOfEmployee', $this->NameOfEmployee])
             // ->andFilterWhere(['like', 'status', $this->status]);
             ->andFilterWhere(['like', 'status',(Yii::$app->user->can("is-cashier"))?"\u{2714}":$this->status ])
-            ->andFilterWhere(['like', 'sent2AOA',(Yii::$app->user->can("is-AOA"))?"1":$this->sent2AOA ])
-            ->andFilterWhere(['like', 'Created_by',((Yii::$app->user->can("is-cashier")|| Yii::$app->user->can("is-AOA"))?$this->Created_by:Yii::$app->user->id)]);
+            ->andFilterWhere(['like', 'sent2AOA',(Yii::$app->user->can("is-AOA"))?"1":$this->sent2AOA ]);           // ->andFilterWhere(['like', 'Created_by',((Yii::$app->user->can("is-cashier")|| Yii::$app->user->can("is-AOA"))?$this->Created_by:Yii::$app->user->id)]);
         return $dataProvider;
     }
 }
