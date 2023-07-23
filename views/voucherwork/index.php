@@ -23,7 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= (!Yii::$app->user->can("is-AOA") && !Yii::$app->user->can("is-cashier")) ? Html::a('Create Voucherwork', ['create'], ['class' => 'btn btn-success']) : '' ?>
     </p>
-
+    <?php
+        // Show the "Show All Vouchers" button if the user has the appropriate role
+        // if (Yii::$app->user->can("is-AOA") || Yii::$app->user->can("is-cashier")) {
+            echo Html::a('Show All Vouchers', ['voucherwork/showall', 'showAll' => true], ['class' => 'btn btn-primary']);
+        // }
+        ?>
 
     <?= 
     GridView::widget([

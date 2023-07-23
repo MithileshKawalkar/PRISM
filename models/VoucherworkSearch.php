@@ -37,9 +37,12 @@ class VoucherworkSearch extends Voucherwork
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return [
+            'default' => parent::scenarios()['default'],
+            'showAll' => $this->attributes(), // Add a new scenario named 'showAll'
+        ];
     }
+
 
     /**
      * Creates data provider instance with search query applied
@@ -66,6 +69,14 @@ class VoucherworkSearch extends Voucherwork
             return $dataProvider;
         }
 
+        if ($this->scenario === 'showAll') {
+            // Remove the filter for Created_by if 'showAll' scenario is used
+            $query->andFilterWhere(['like', 'Created_by', $this->Created_by]);
+        } else {
+            // Apply the default filter for Created_by based on user's role
+            $query->andFilterWhere(['like', 'Created_by', ((Yii::$app->user->can("is-cashier") || Yii::$app->user->can("is-AOA")) ? $this->Created_by : Yii::$app->user->id)]);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -79,8 +90,8 @@ class VoucherworkSearch extends Voucherwork
             ->andFilterWhere(['like', 'Description', $this->Description])
             ->andFilterWhere(['like', 'NameOfContractor', $this->NameOfContractor])
             ->andFilterWhere(['like', 'status',(Yii::$app->user->can("is-cashier"))?"\u{2714}":$this->status ])
-            ->andFilterWhere(['like', 'sent2AOA',(Yii::$app->user->can("is-AOA"))?"1":$this->sent2AOA ])
-            ->andFilterWhere(['like', 'Created_by',((Yii::$app->user->can("is-cashier")|| Yii::$app->user->can("is-AOA"))?$this->Created_by:Yii::$app->user->id)]);
+            ->andFilterWhere(['like', 'sent2AOA',(Yii::$app->user->can("is-AOA"))?"1":$this->sent2AOA ]);
+            // ->andFilterWhere(['like', 'Created_by',((Yii::$app->user->can("is-cashier")|| Yii::$app->user->can("is-AOA"))?$this->Created_by:Yii::$app->user->id)]);
             // print_r(var_dump($query->createCommand()->getRawSql()));
             // die();
 

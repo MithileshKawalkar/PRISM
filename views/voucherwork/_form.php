@@ -108,18 +108,19 @@ use app\models\ContractorDetails;
                            //  ]);  ?> -->
 
                            <div class="col-sm-2"> 
-                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]shortcode")->textInput(['maxlength' => true,'id' => 'shortcode']) ?>
+                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]shortcode")->textInput(['maxlength' => true,'id' => 'shortcode-payment']) ?>
                             </div>
 
-                             <div class="col-sm-3">
-                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]OldHeadOfAccount")->textInput(['maxlength' => true,'id'  => 'Paymentvoucherwork-OldHeadOfAccount']) ?>
+                            <div class="col-sm-3">
+                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]OldHeadOfAccount")->textInput(['maxlength' => true, 'id' => 'Paymentvoucherwork-OldHeadOfAccount', 'readOnly' => true]) ?>
                             </div>
                             <div class="col-sm-3">
-                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]RationalizedHeadOfAccount")->textInput(['maxlength' => true,'id'  => 'Paymentvoucherwork-RationalizedHeadOfAccount']) ?>
+                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]RationalizedHeadOfAccount")->textInput(['maxlength' => true, 'id' => 'Paymentvoucherwork-RationalizedHeadOfAccount', 'readOnly' => true]) ?>
                             </div>
                             <div class="col-sm-2">
-                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]DrOrCr")->textInput(['maxlength' => true,'id'  => 'Paymentvoucherwork-DrOrCr']) ?>
+                                <?= $form->field($modelPaymentvoucherwork, "[{$i}]DrOrCr")->textInput(['maxlength' => true, 'id' => 'Paymentvoucherwork-DrOrCr', 'readOnly' => true]) ?>
                             </div>
+
                             <div class="col-sm-2">
                                 <?= $form->field($modelPaymentvoucherwork, "[{$i}]Amount")->textInput(['maxlength' => true, 'class' => 'payment-amount']) ?>
                             </div>
@@ -186,17 +187,17 @@ use app\models\ContractorDetails;
                            //  ]);  ?> -->
 
                            <div class="col-sm-2">
-                                <?= $form->field($modelDeductionvoucherwork, "[{$i}]shortcode")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelDeductionvoucherwork, "[{$i}]shortcode")->textInput(['maxlength' => true,'id' => 'shortcode-deduction']) ?>
                             </div>
 
                              <div class="col-sm-3">
-                                <?= $form->field($modelDeductionvoucherwork, "[{$i}]OldHeadOfAccount")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelDeductionvoucherwork, "[{$i}]OldHeadOfAccount")->textInput(['maxlength' => true,'id'  => 'Deductionvoucherwork-OldHeadOfAccount', 'readOnly' => true]) ?>
                             </div>
                             <div class="col-sm-3">
-                                <?= $form->field($modelDeductionvoucherwork, "[{$i}]RationalizedHeadOfAccount")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelDeductionvoucherwork, "[{$i}]RationalizedHeadOfAccount")->textInput(['maxlength' => true,'id'  => 'Deductionvoucherwork-RationalizedHeadOfAccount', 'readOnly' => true]) ?>
                             </div>
                             <div class="col-sm-2">
-                                <?= $form->field($modelDeductionvoucherwork, "[{$i}]DrOrCr")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelDeductionvoucherwork, "[{$i}]DrOrCr")->textInput(['maxlength' => true,'id'  => 'Deductionvoucherwork-DrOrCr', 'readOnly' => true]) ?>
                             </div>
                             <div class="col-sm-2">
 
@@ -265,17 +266,17 @@ use app\models\ContractorDetails;
                             
 
                            <div class="col-sm-2">
-                                <?= $form->field($modelNetpayvoucherwork, "[{$i}]shortcode")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelNetpayvoucherwork, "[{$i}]shortcode")->textInput(['maxlength' => true,'id' => 'shortcode-netpay']) ?>
                             </div>
 
                              <div class="col-sm-3">
-                                <?= $form->field($modelNetpayvoucherwork, "[{$i}]OldHeadOfAccount")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelNetpayvoucherwork, "[{$i}]OldHeadOfAccount")->textInput(['maxlength' => true,'id'  => 'Netpayvoucherwork-OldHeadOfAccount', 'readOnly' => true]) ?>
                             </div>
                             <div class="col-sm-3">
-                                <?= $form->field($modelNetpayvoucherwork, "[{$i}]RationalizedHeadOfAccount")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelNetpayvoucherwork, "[{$i}]RationalizedHeadOfAccount")->textInput(['maxlength' => true,'id'  => 'Netpayvoucherwork-RationalizedHeadOfAccount', 'readOnly' => true]) ?>
                             </div>
                             <div class="col-sm-2">
-                                <?= $form->field($modelNetpayvoucherwork, "[{$i}]DrOrCr")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelNetpayvoucherwork, "[{$i}]DrOrCr")->textInput(['maxlength' => true,'id'  => 'Netpayvoucherwork-DrOrCr', 'readOnly' => true]) ?>
                             </div>
                             <div class="col-sm-2">
 
@@ -434,7 +435,7 @@ $(".dynamicform_wrapper2").on("limitReached", function(e, item1) {
 //     })
 // });
 
-$('#shortcode').on('change', function () {
+$('#shortcode-payment').on('change', function () {
   var shortcodeId = $(this).val();
   $.get('index.php?r=paymentshortcode%2Fgetold', { shortcodeId: shortcodeId }, function (data) {
     console.log(data);
@@ -451,6 +452,54 @@ $('#shortcode').on('change', function () {
         $('#Paymentvoucherwork-OldHeadOfAccount').val(parsedData.OldHeadOfAccount);
         $('#Paymentvoucherwork-RationalizedHeadOfAccount').val(parsedData.RationalizedHeadOfAccount);
         $('#Paymentvoucherwork-DrOrCr').val(parsedData.DrOrCr);
+      } catch (e) {
+        console.error('Error parsing JSON data:', e);
+      }
+    }
+  });
+});
+
+$('#shortcode-deduction').on('change', function () {
+  var shortcodeId = $(this).val();
+  $.get('index.php?r=paymentshortcode%2Fgetold', { shortcodeId: shortcodeId }, function (data) {
+    console.log(data);
+
+    // Check if the data is already an object
+    if (typeof data === 'object') {
+      $('#Deductionvoucherwork-OldHeadOfAccount').val(data.OldHeadOfAccount);
+      $('#Deductionvoucherwork-RationalizedHeadOfAccount').val(data.RationalizedHeadOfAccount);
+      $('#Deductionvoucherwork-DrOrCr').val(data.DrOrCr);
+    } else {
+      // If the data is a JSON-encoded string, parse it
+      try {
+        var parsedData = $.parseJSON(data);
+        $('#Deductionvoucherwork-OldHeadOfAccount').val(parsedData.OldHeadOfAccount);
+        $('#Deductionvoucherwork-RationalizedHeadOfAccount').val(parsedData.RationalizedHeadOfAccount);
+        $('#Deductionvoucherwork-DrOrCr').val(parsedData.DrOrCr);
+      } catch (e) {
+        console.error('Error parsing JSON data:', e);
+      }
+    }
+  });
+});
+
+$('#shortcode-netpay').on('change', function () {
+  var shortcodeId = $(this).val();
+  $.get('index.php?r=paymentshortcode%2Fgetold', { shortcodeId: shortcodeId }, function (data) {
+    console.log(data);
+
+    // Check if the data is already an object
+    if (typeof data === 'object') {
+      $('#Netpayvoucherwork-OldHeadOfAccount').val(data.OldHeadOfAccount);
+      $('#Netpayvoucherwork-RationalizedHeadOfAccount').val(data.RationalizedHeadOfAccount);
+      $('#Netpayvoucherwork-DrOrCr').val(data.DrOrCr);
+    } else {
+      // If the data is a JSON-encoded string, parse it
+      try {
+        var parsedData = $.parseJSON(data);
+        $('#Netpayvoucherwork-OldHeadOfAccount').val(parsedData.OldHeadOfAccount);
+        $('#Netpayvoucherwork-RationalizedHeadOfAccount').val(parsedData.RationalizedHeadOfAccount);
+        $('#Netpayvoucherwork-DrOrCr').val(parsedData.DrOrCr);
       } catch (e) {
         console.error('Error parsing JSON data:', e);
       }

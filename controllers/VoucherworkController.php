@@ -91,6 +91,22 @@ class VoucherworkController extends Controller
     // }
     }
 
+    public function actionShowall($showAll = false)
+    {
+        $searchModel = new VoucherworkSearch();
+
+        if ($showAll) {
+            $searchModel->scenario = 'showAll'; // Set the 'showAll' scenario when the button is clicked
+        }
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    } 
+
     /**
      * Displays a single Voucherwork model.
      * @param int $id ID
