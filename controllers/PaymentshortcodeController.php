@@ -50,28 +50,14 @@ class PaymentshortcodeController extends Controller
 
     public function actionGetold($shortcodeId)
     {
-        
-//         $shortcode = Paymentshortcode::findOne($shortcodeId);
-// print_r($shortcode);
-// return $shortcode;
-//         die();
-//         if ($shortcode) {
-//             // Assuming the attributes in the Paymentshortcode model are named OldHeadOfAccount, RationalizedHeadOfAccount, and DrOrCr
-//             $data = [
-//                 'OldHeadOfAccount' => $shortcode->OldHeadOfAccount,
-//                 'RationalizedHeadOfAccount' => $shortcode->RationalizedHeadOfAccount,
-//                 'DrOrCr' => $shortcode->DrOrCr,
-//             ];
 
-//             return json_encode($data);
-//         }
-//         return json_encode([]);
-
-Yii::$app->response->format = Response::FORMAT_JSON;
+    Yii::$app->response->format = Response::FORMAT_JSON;
 
     try {
         // Rest of the code
-        $shortcode = Paymentshortcode::findOne($shortcodeId);
+        // $shortcode = Paymentshortcode::findOne($shortcodeId);
+        $shortcode = Paymentshortcode::findOne(['shortcode' => $shortcodeId]);
+
 
         if ($shortcode) {
             // Assuming the attributes in the Paymentshortcode model are named OldHeadOfAccount, RationalizedHeadOfAccount, and DrOrCr
